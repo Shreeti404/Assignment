@@ -1,0 +1,47 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Prepare scheduler",
+      "type": "process",
+      "command": "node",
+      "args": ["scripts/setup.mjs"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Run scheduler",
+      "type": "process",
+      "command": "npm.cmd",
+      "args": ["run", "dev"],
+      "dependsOn": ["Prepare scheduler"],
+      "dependsOrder": "sequence",
+      "isBackground": true,
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+      "problemMatcher": {
+        "owner": "scheduler",
+        "pattern": {
+          "regexp": "^(.*)$",
+          "message": 1
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^.*$",
+          "endsPattern": "http://localhost:5173"
+        }
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Build scheduler",
+      "type": "process",
+      "command": "npm.cmd",
+      "args": ["run", "build"],
+      "problemMatcher": []
+    }
+  ]
+}
